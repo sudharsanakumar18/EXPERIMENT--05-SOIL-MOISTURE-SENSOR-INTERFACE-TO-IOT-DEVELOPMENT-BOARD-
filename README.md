@@ -1,3 +1,6 @@
+# NAME: SUDHARSANA KUMAR S R
+# REGISTER NUMBER: 212223240162
+# DATE:
 # EXPERIMENT--05-SOIL-MOISTURE-SENSOR-INTERFACE-TO-IOT-DEVELOPMENT-BOARD-
 ## Aim: To Interface a Analog Input  (soil moisture sensor) to ARM IOT development board and write a  program to obtain  the data on the com port 
 ## Components required: STM32 CUBE IDE, ARM IOT development board,  STM programmer tool.
@@ -97,13 +100,35 @@ GND is the ground pin.
 
 
 ## STM 32 CUBE PROGRAM :
+~~~
+int adc_val;
+ while (1)
+  {
+    HAL_ADC_Start(&hadc);
+                           HAL_ADC_PollForConversion(&hadc,100);
+                           adc_val = HAL_ADC_GetValue(&hadc);
+                           HAL_ADC_Stop(&hadc);
+                           HAL_Delay(500);
 
+                           uint32_t soilmoist;
+    soilmoist=adc_val/10.24;
+                           printf("soilmoisture :%ld\n",soilmoist);
+                           if(adc_val<500)
+                           {
+                        	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+                           }
+                           if(adc_val>500)
+                           {
+                        	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+                           }
+
+
+
+  }
+~~~
 
 
 ## Output screen shots on serial monitor   :
- 
- 
- 
- 
+![image](https://github.com/user-attachments/assets/3daabf70-24bc-4780-84f2-5e64c766adb1)
 ## Result :
 Interfacing a Analog Input (soil moisture sensor) with ARM microcontroller based IOT development is executed and the results visualized on serial monitor 
